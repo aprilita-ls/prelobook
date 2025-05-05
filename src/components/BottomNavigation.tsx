@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Home, Search, Package, RefreshCw, User } from "lucide-react";
+import { Home, Search, Package, RefreshCw, User, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -27,9 +27,9 @@ const navItems: NavItem[] = [
     path: "/paket",
   },
   {
-    icon: RefreshCw,
-    label: "Tukar",
-    path: "/tukar",
+    icon: MessageCircle,
+    label: "Chat",
+    path: "/chat",
   },
   {
     icon: User,
