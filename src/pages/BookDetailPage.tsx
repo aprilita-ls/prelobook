@@ -9,6 +9,18 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/use-toast";
 import BottomNavigation from "@/components/BottomNavigation";
 
+// Define the categories array that was missing
+const categories = [
+  { id: "academics", name: "Akademik" },
+  { id: "novel", name: "Novel" },
+  { id: "biography", name: "Biografi" },
+  { id: "children", name: "Anak-anak" },
+  { id: "business", name: "Bisnis" },
+  { id: "religion", name: "Agama" },
+  { id: "reference", name: "Referensi" },
+  { id: "selfHelp", name: "Pengembangan Diri" },
+];
+
 const BookDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
