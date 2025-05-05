@@ -15,6 +15,7 @@ import CartPage from "./pages/CartPage";
 import ProfilePage from "./pages/ProfilePage";
 import ExchangePage from "./pages/ExchangePage";
 import ChatHistoryPage from "./pages/ChatHistoryPage";
+import ChatDetailPage from "./pages/ChatDetailPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/profil" element={<ProfilePage />} />
           <Route path="/tukar" element={<ExchangePage />} />
           <Route path="/chat" element={<ChatHistoryPage />} />
+          <Route path="/chat/:id" element={<ChatDetailPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

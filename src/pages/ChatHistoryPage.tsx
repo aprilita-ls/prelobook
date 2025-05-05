@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
@@ -11,8 +12,8 @@ const chatHistory = [
   {
     id: "1",
     name: "Customer Service",
-    lastMessage: "Pesanan Anda sedang dalam proses pengiriman",
-    time: "10:30",
+    lastMessage: "Apakah Anda berminat untuk membelinya?",
+    time: "10:33",
     date: "Hari ini",
     unread: 2,
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
@@ -20,8 +21,8 @@ const chatHistory = [
   {
     id: "2",
     name: "Admin Prelobook",
-    lastMessage: "Terima kasih telah berbelanja di Prelobook",
-    time: "09:15",
+    lastMessage: "Harganya Rp 45.000 sudah termasuk ongkos kirim untuk wilayah Jawa.",
+    time: "09:20",
     date: "Hari ini",
     unread: 0,
     avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
@@ -64,32 +65,34 @@ const ChatHistoryPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm">
           {chatHistory.map((chat, index) => (
             <React.Fragment key={chat.id}>
-              <div className="flex items-center p-4">
-                <Avatar className="h-12 w-12 mr-3">
-                  <AvatarImage src={chat.avatar} alt={chat.name} />
-                  <AvatarFallback className="bg-prelobook-accent text-white">
-                    {chat.name.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-                
-                <div className="flex-1">
-                  <div className="flex justify-between items-center">
-                    <h3 className="font-medium text-prelobook-primary">{chat.name}</h3>
-                    <span className="text-xs text-gray-500">{chat.time}</span>
+              <Link to={`/chat/${chat.id}`} className="block">
+                <div className="flex items-center p-4">
+                  <Avatar className="h-12 w-12 mr-3">
+                    <AvatarImage src={chat.avatar} alt={chat.name} />
+                    <AvatarFallback className="bg-prelobook-accent text-white">
+                      {chat.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  
+                  <div className="flex-1">
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-medium text-prelobook-primary">{chat.name}</h3>
+                      <span className="text-xs text-gray-500">{chat.time}</span>
+                    </div>
+                    <div className="flex justify-between items-center mt-1">
+                      <p className="text-sm text-gray-600 truncate max-w-[200px]">
+                        {chat.lastMessage}
+                      </p>
+                      {chat.unread > 0 && (
+                        <span className="bg-prelobook-accent text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          {chat.unread}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">{chat.date}</p>
                   </div>
-                  <div className="flex justify-between items-center mt-1">
-                    <p className="text-sm text-gray-600 truncate max-w-[200px]">
-                      {chat.lastMessage}
-                    </p>
-                    {chat.unread > 0 && (
-                      <span className="bg-prelobook-accent text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                        {chat.unread}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">{chat.date}</p>
                 </div>
-              </div>
+              </Link>
               {index < chatHistory.length - 1 && <Separator />}
             </React.Fragment>
           ))}
