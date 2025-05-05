@@ -61,24 +61,24 @@ const CatalogPage: React.FC = () => {
     });
 
   return (
-    <div className="min-h-screen bg-prelobook-background pb-16">
+    <div className="min-h-screen bg-prelobook-background pb-20">
       <Header title="Katalog Buku" />
 
-      <div className="p-4">
+      <div className="px-4 pt-2 pb-20">
         <SearchBar
           placeholder="Cari judul, penulis, atau penerbit..."
           onSearch={handleSearch}
-          className="mb-4"
+          className="mb-3"
         />
 
-        <div className="mb-4 flex overflow-x-auto py-1 gap-2">
+        <div className="mb-3 flex overflow-x-auto py-2 gap-2 no-scrollbar">
           {categories.map((category) => (
             <Button
               key={category.id}
               variant={selectedCategory === category.id ? "default" : "outline"}
-              className={`text-xs py-1 px-3 h-auto ${
+              className={`text-xs py-1 px-3 h-8 whitespace-nowrap ${
                 selectedCategory === category.id
-                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent"
+                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
                   : "bg-white text-gray-700"
               }`}
               onClick={() => handleCategorySelect(category.id)}
@@ -88,75 +88,77 @@ const CatalogPage: React.FC = () => {
           ))}
         </div>
 
-        <div className="flex justify-between mb-4">
+        <div className="flex justify-between items-center mb-3 sticky top-0 z-10 bg-prelobook-background py-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-white text-gray-700"
+                className="bg-white text-gray-700 h-8 px-3"
               >
-                <SlidersHorizontal className="h-4 w-4 mr-2" />
-                {sortOption === "newest"
-                  ? "Terbaru"
-                  : sortOption === "cheapest"
-                  ? "Termurah"
-                  : "Terlaris"}
+                <SlidersHorizontal className="h-3.5 w-3.5 mr-1.5" />
+                <span className="text-xs">
+                  {sortOption === "newest"
+                    ? "Terbaru"
+                    : sortOption === "cheapest"
+                    ? "Termurah"
+                    : "Terlaris"}
+                </span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
-              <DropdownMenuItem onClick={() => handleSortChange("newest")}>
+            <DropdownMenuContent align="start" className="w-40">
+              <DropdownMenuItem onClick={() => handleSortChange("newest")} className="text-sm">
                 Terbaru
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("cheapest")}>
+              <DropdownMenuItem onClick={() => handleSortChange("cheapest")} className="text-sm">
                 Termurah
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSortChange("bestSeller")}>
+              <DropdownMenuItem onClick={() => handleSortChange("bestSeller")} className="text-sm">
                 Terlaris
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             <Button
               variant="outline"
               size="sm"
-              className={`p-2 ${
+              className={`p-1.5 h-8 w-8 ${
                 viewMode === "grid"
-                  ? "bg-prelobook-accent text-white"
+                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
                   : "bg-white text-gray-700"
               }`}
               onClick={() => setViewMode("grid")}
             >
-              <LayoutGrid className="h-4 w-4" />
+              <LayoutGrid className="h-3.5 w-3.5" />
             </Button>
             <Button
               variant="outline"
               size="sm"
-              className={`p-2 ${
+              className={`p-1.5 h-8 w-8 ${
                 viewMode === "list"
-                  ? "bg-prelobook-accent text-white"
+                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
                   : "bg-white text-gray-700"
               }`}
               onClick={() => setViewMode("list")}
             >
-              <List className="h-4 w-4" />
+              <List className="h-3.5 w-3.5" />
             </Button>
           </div>
         </div>
 
         {filteredBooks.length === 0 ? (
-          <div className="text-center py-8">
+          <div className="text-center py-8 bg-white rounded-lg shadow-sm">
             <p className="text-gray-500">Tidak ada buku yang ditemukan</p>
           </div>
         ) : viewMode === "grid" ? (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2.5">
             {filteredBooks.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
           </div>
         ) : (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2.5">
             {filteredBooks.map((book) => (
               <BookCard key={book.id} book={book} compact />
             ))}
