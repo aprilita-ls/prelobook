@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
           <h2 className="text-xl font-bold text-prelobook-primary">
             Halo, {currentUser.name}
           </h2>
-          <p className="text-sm text-gray-500">Temukan buku favorit Anda di PRELOBOOK</p>
+          <p className="text-sm text-gray-500">Temukan buku favorit Anda di sini</p>
         </div>
         
         <SearchBar className="mb-4" />

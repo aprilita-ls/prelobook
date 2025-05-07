@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Home, Search, Package, RefreshCw, User, MessageCircle } from "lucide-react";
+import { Home, Book, Package, RefreshCw, User, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -17,7 +17,7 @@ const navItems: NavItem[] = [
     path: "/",
   },
   {
-    icon: Search,
+    icon: Book,
     label: "Katalog",
     path: "/katalog",
   },

@@ -1,4 +1,3 @@
-
 export type BookCondition = 'Baru' | 'Sangat Baik' | 'Baik' | 'Cukup Baik';
 
 export interface Book {
@@ -40,7 +39,7 @@ export interface User {
 
 export const currentUser: User = {
   id: 'user1',
-  name: 'Ahmad Fauzi',
+  name: 'Intan',
   avatar: '/placeholder.svg',
 };
 
@@ -70,13 +69,10 @@ export const sellers: Seller[] = [
 
 export const categories: Category[] = [
   { id: 'cat1', name: 'Akademik', icon: 'graduation-cap' },
-  { id: 'cat2', name: 'Novel', icon: 'book' },
-  { id: 'cat3', name: 'Referensi', icon: 'bookmark' },
-  { id: 'cat4', name: 'Anak', icon: 'baby' },
-  { id: 'cat5', name: 'Biografi', icon: 'user' },
-  { id: 'cat6', name: 'Bisnis', icon: 'briefcase' },
-  { id: 'cat7', name: 'Agama', icon: 'book-open' },
-  { id: 'cat8', name: 'Komputer', icon: 'laptop' },
+  { id: 'cat2', name: 'Fiksi', icon: 'book' },
+  { id: 'cat3', name: 'Novel', icon: 'book-open' },
+  { id: 'cat4', name: 'Kamus', icon: 'book-text' },
+  { id: 'cat5', name: 'Antologi', icon: 'bookmark' },
 ];
 
 export const books: Book[] = [

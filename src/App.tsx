@@ -14,6 +14,7 @@ import PackageDetailPage from "./pages/PackageDetailPage";
 import CartPage from "./pages/CartPage";
 import ProfilePage from "./pages/ProfilePage";
 import ExchangePage from "./pages/ExchangePage";
+import TukarPage from "./pages/TukarPage";
 import ChatHistoryPage from "./pages/ChatHistoryPage";
 import ChatDetailPage from "./pages/ChatDetailPage";
 import NotFound from "./pages/NotFound";
@@ -34,7 +35,7 @@ const App = () => (
           <Route path="/paket/:id" element={<PackageDetailPage />} />
           <Route path="/keranjang" element={<CartPage />} />
           <Route path="/profil" element={<ProfilePage />} />
-          <Route path="/tukar" element={<ExchangePage />} />
+          <Route path="/tukar" element={<TukarPage />} />
           <Route path="/chat" element={<ChatHistoryPage />} />
           <Route path="/chat/:id" element={<ChatDetailPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -56,9 +56,8 @@ const Header: React.FC<HeaderProps> = ({
             <img 
               src="/placeholder.svg" 
               alt="Logo" 
-              className="h-8 w-8 mr-2"
+              className="h-8 w-8"
             />
-            <h1 className="text-lg font-bold text-prelobook-primary">PRELOBOOK</h1>
           </div>
         )}
       </div>
