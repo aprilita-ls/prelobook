@@ -92,7 +92,7 @@ const TukarPage: React.FC = () => {
           {filteredBooks.slice(0, 6).map((book) => (
             <BookCard key={book.id} book={book}>
               <Button
-                className="absolute bottom-3 left-3 right-3 bg-prelobook-accent hover:bg-prelobook-accent/90"
+                className="w-full mt-3 bg-prelobook-accent hover:bg-prelobook-accent/90"
                 size="sm"
               >
                 Tukar

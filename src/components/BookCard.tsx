@@ -8,9 +8,10 @@ import { Book } from "@/data/mockData";
 interface BookCardProps {
   book: Book;
   compact?: boolean;
+  children?: React.ReactNode;
 }
 
-const BookCard: React.FC<BookCardProps> = ({ book, compact = false }) => {
+const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children }) => {
   const discountedPrice = book.discount
     ? book.price - (book.price * book.discount) / 100
     : book.price;
@@ -91,14 +92,18 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false }) => {
             </span>
           </div>
 
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full mt-3 border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white"
-          >
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            Keranjang
-          </Button>
+          {children}
+
+          {!children && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full mt-3 border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white"
+            >
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Keranjang
+            </Button>
+          )}
         </div>
       </div>
     </Link>
