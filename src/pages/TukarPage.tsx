@@ -1,15 +1,16 @@
 
 import React, { useState } from "react";
-import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
 import { Button } from "@/components/ui/button";
 import BookCard from "@/components/BookCard";
 import { books } from "@/data/mockData";
 import BottomNavigation from "@/components/BottomNavigation";
-import { BookOpen, Plus, BookOpenCheck } from "lucide-react";
+import { BookOpen, Plus, BookOpenCheck, RefreshCw } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const TukarPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
   
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -24,18 +25,12 @@ const TukarPage: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-prelobook-background pb-16">
-      <Header title="Tukar Buku" />
+      <div className="bg-prelobook-accent text-white p-4">
+        <h1 className="text-xl font-bold">Tukar Buku</h1>
+        <p className="text-sm opacity-90">Tukarkan buku lama Anda dengan buku baru</p>
+      </div>
       
       <div className="p-4">
-        <div className="mb-4">
-          <h2 className="text-xl font-bold text-prelobook-primary">
-            Program Tukar Buku
-          </h2>
-          <p className="text-sm text-gray-500">
-            Tukarkan buku lama Anda dengan buku baru
-          </p>
-        </div>
-        
         <div className="flex flex-col gap-3 mb-6">
           <div className="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3">
             <div className="bg-prelobook-accent/10 p-3 rounded-full">
@@ -72,6 +67,24 @@ const TukarPage: React.FC = () => {
               <p className="text-xs text-gray-500">Lihat riwayat penukaran buku Anda</p>
             </div>
             <Button size="sm" variant="outline" className="shrink-0">
+              Lihat
+            </Button>
+          </div>
+          
+          <div className="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3">
+            <div className="bg-prelobook-accent/10 p-3 rounded-full">
+              <RefreshCw className="h-6 w-6 text-prelobook-accent" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-medium text-prelobook-primary">Tukar Tambah</h3>
+              <p className="text-xs text-gray-500">Ajukan tukar tambah dengan buku baru</p>
+            </div>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="shrink-0"
+              onClick={() => navigate("/exchange")}
+            >
               Lihat
             </Button>
           </div>
