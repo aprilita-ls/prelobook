@@ -27,6 +27,11 @@ const navItems: NavItem[] = [
     path: "/paket",
   },
   {
+    icon: RefreshCw,
+    label: "Tukar",
+    path: "/tukar",
+  },
+  {
     icon: MessageCircle,
     label: "Chat",
     path: "/chat",
