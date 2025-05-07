@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
@@ -137,16 +136,9 @@ const ChatDetailPage: React.FC = () => {
     <div className="min-h-screen bg-prelobook-background pb-16 flex flex-col">
       <Header 
         title={chat.name}
-        leftComponent={
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={() => navigate('/chat')}
-            className="mr-2"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-        }
+        showBack={true}
+        onBackClick={() => navigate('/chat')}
+        showNotification={false}
       />
       
       <ScrollArea className="flex-grow px-4 py-4">

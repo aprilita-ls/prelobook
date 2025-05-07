@@ -11,6 +11,7 @@ interface HeaderProps {
   showCart?: boolean;
   showBack?: boolean;
   onBackClick?: () => void;
+  leftComponent?: React.ReactNode;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -19,13 +20,16 @@ const Header: React.FC<HeaderProps> = ({
   showCart = true,
   showBack = false,
   onBackClick,
+  leftComponent,
 }) => {
   const navigate = useNavigate();
   
   return (
     <header className="bg-white sticky top-0 z-40 px-4 py-3 flex items-center justify-between border-b border-gray-100">
       <div className="flex items-center gap-3">
-        {showBack && (
+        {leftComponent ? (
+          leftComponent
+        ) : showBack ? (
           <button
             onClick={onBackClick || (() => navigate(-1))}
             className="p-1"
@@ -44,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
               <path d="m15 18-6-6 6-6" />
             </svg>
           </button>
-        )}
+        ) : null}
         {title ? (
           <h1 className="text-lg font-bold text-prelobook-primary">{title}</h1>
         ) : (
