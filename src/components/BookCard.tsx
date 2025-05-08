@@ -1,6 +1,6 @@
 
 import React from "react";
-import { ShoppingCart, Star, MessageCircle } from "lucide-react";
+import { ShoppingCart, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Book } from "@/data/mockData";
@@ -29,11 +29,11 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
   if (compact) {
     return (
       <Link to={`/buku/${book.id}`} className="block">
-        <div className="flex items-center space-x-3 p-2 bg-white rounded-lg">
+        <div className="flex items-center space-x-3 p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
           <img
             src={book.coverImage}
             alt={book.title}
-            className="w-16 h-20 object-cover rounded"
+            className="w-16 h-20 object-cover rounded shadow-sm"
           />
           <div className="flex-1">
             <h3 className="text-sm font-medium line-clamp-1">{book.title}</h3>
@@ -52,7 +52,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
   }
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-200">
       <Link to={`/buku/${book.id}`} className="block">
         <div className="relative">
           <img
@@ -61,11 +61,11 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
             className="w-full h-48 object-cover"
           />
           {book.discount && (
-            <div className="absolute top-2 right-2 bg-prelobook-accent text-white text-xs px-2 py-1 rounded-full">
+            <div className="absolute top-2 right-2 bg-prelobook-accent text-white text-xs font-medium px-2 py-1 rounded-full shadow-sm">
               -{book.discount}%
             </div>
           )}
-          <div className="absolute bottom-2 left-2 bg-white px-2 py-1 rounded text-xs font-medium">
+          <div className="absolute bottom-2 left-2 bg-white px-2 py-1 rounded text-xs font-medium shadow-sm">
             {book.condition}
           </div>
         </div>
@@ -101,11 +101,11 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
         {!children && (
           <div className="flex gap-2">
             <Button
-              variant="outline"
+              variant="default"
               size="sm"
-              className="flex-1 border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white"
+              className="flex-1 bg-prelobook-accent hover:bg-prelobook-accent/90 text-white transition-colors duration-200 font-medium"
             >
-              <ShoppingCart className="mr-2 h-4 w-4" />
+              <ShoppingCart className="mr-1.5 h-3.5 w-3.5" />
               Keranjang
             </Button>
             
@@ -113,13 +113,13 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
               <Button
                 variant="outline"
                 size="sm"
-                className="border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white"
+                className="border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent/10 transition-colors duration-200"
                 onClick={(e) => {
                   e.preventDefault();
                   window.location.href = `/chat/seller-${book.id}`;
                 }}
               >
-                <MessageCircle className="h-4 w-4" />
+                <MessageCircle className="h-3.5 w-3.5" />
               </Button>
             )}
           </div>
@@ -130,3 +130,5 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
 };
 
 export default BookCard;
+
+import { Star } from "lucide-react";

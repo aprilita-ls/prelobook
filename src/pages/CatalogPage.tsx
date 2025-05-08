@@ -76,10 +76,10 @@ const CatalogPage: React.FC = () => {
             <Button
               key={category.id}
               variant={selectedCategory === category.id ? "default" : "outline"}
-              className={`text-xs py-1 px-3 h-8 whitespace-nowrap flex-shrink-0 ${
+              className={`text-xs py-1 px-3 h-8 whitespace-nowrap flex-shrink-0 rounded-full transition-all duration-200 ${
                 selectedCategory === category.id
                   ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
-                  : "bg-white text-gray-700"
+                  : "bg-white text-gray-700 hover:bg-gray-100"
               }`}
               onClick={() => handleCategorySelect(category.id)}
             >
@@ -94,7 +94,7 @@ const CatalogPage: React.FC = () => {
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-white text-gray-700 h-8 px-3"
+                className="bg-white text-gray-700 h-8 px-3 hover:bg-gray-100"
               >
                 <SlidersHorizontal className="h-3.5 w-3.5 mr-1.5" />
                 <span className="text-xs">
@@ -126,7 +126,7 @@ const CatalogPage: React.FC = () => {
               className={`p-1.5 h-8 w-8 ${
                 viewMode === "grid"
                   ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
-                  : "bg-white text-gray-700"
+                  : "bg-white text-gray-700 hover:bg-gray-100"
               }`}
               onClick={() => setViewMode("grid")}
             >
@@ -138,7 +138,7 @@ const CatalogPage: React.FC = () => {
               className={`p-1.5 h-8 w-8 ${
                 viewMode === "list"
                   ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
-                  : "bg-white text-gray-700"
+                  : "bg-white text-gray-700 hover:bg-gray-100"
               }`}
               onClick={() => setViewMode("list")}
             >
@@ -152,13 +152,13 @@ const CatalogPage: React.FC = () => {
             <p className="text-gray-500">Tidak ada buku yang ditemukan</p>
           </div>
         ) : viewMode === "grid" ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {filteredBooks.map((book) => (
               <BookCard key={book.id} book={book} showChatButton={true} />
             ))}
           </div>
         ) : (
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-3">
             {filteredBooks.map((book) => (
               <BookCard key={book.id} book={book} compact showChatButton={true} />
             ))}
