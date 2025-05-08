@@ -12,10 +12,10 @@ import BottomNavigation from "@/components/BottomNavigation";
 
 const HomePage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-prelobook-background pb-16">
+    <div className="min-h-screen bg-prelobook-background pb-24">
       <Header />
       
-      <div className="p-4">
+      <div className="p-3 sm:p-4">
         <div className="mb-4">
           <h2 className="text-xl font-bold text-prelobook-primary">
             Halo, {currentUser.name}
@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
             </Link>
           </div>
           
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
             {books.slice(0, 4).map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
             </Link>
           </div>
           
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
             {books
               .filter((book) => book.discount)
               .slice(0, 4)

@@ -58,33 +58,33 @@ const chatHistory = [
 
 const ChatHistoryPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-prelobook-background pb-16">
+    <div className="min-h-screen bg-prelobook-background pb-24">
       <Header title="Riwayat Chat" />
       
-      <div className="p-4">
-        <div className="bg-white rounded-lg shadow-sm">
+      <div className="px-4 py-3 sm:p-4">
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           {chatHistory.map((chat, index) => (
             <React.Fragment key={chat.id}>
               <Link to={`/chat/${chat.id}`} className="block">
-                <div className="flex items-center p-4">
-                  <Avatar className="h-12 w-12 mr-3">
+                <div className="flex items-center p-3 sm:p-4 hover:bg-gray-50 transition-colors">
+                  <Avatar className="h-10 w-10 sm:h-12 sm:w-12 mr-3 flex-shrink-0">
                     <AvatarImage src={chat.avatar} alt={chat.name} />
                     <AvatarFallback className="bg-prelobook-accent text-white">
                       {chat.name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                   
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center">
-                      <h3 className="font-medium text-prelobook-primary">{chat.name}</h3>
-                      <span className="text-xs text-gray-500">{chat.time}</span>
+                      <h3 className="font-medium text-prelobook-primary truncate">{chat.name}</h3>
+                      <span className="text-xs text-gray-500 ml-2 flex-shrink-0">{chat.time}</span>
                     </div>
                     <div className="flex justify-between items-center mt-1">
-                      <p className="text-sm text-gray-600 truncate max-w-[200px]">
+                      <p className="text-sm text-gray-600 truncate max-w-[calc(100%-40px)]">
                         {chat.lastMessage}
                       </p>
                       {chat.unread > 0 && (
-                        <span className="bg-prelobook-accent text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        <span className="bg-prelobook-accent text-white text-xs rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0">
                           {chat.unread}
                         </span>
                       )}

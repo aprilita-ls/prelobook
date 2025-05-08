@@ -8,9 +8,11 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, MessageCircle } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import BottomNavigation from "@/components/BottomNavigation";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const PackageDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const isMobile = useIsMobile();
   
   const academicPackage = academicPackages.find((p) => p.id === id);
   
@@ -50,10 +52,10 @@ const PackageDetailPage: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-prelobook-background pb-16">
+    <div className="min-h-screen bg-prelobook-background pb-24">
       <Header showBack />
       
-      <div className="relative h-48">
+      <div className="relative h-48 sm:h-64">
         <img
           src={academicPackage.coverImage}
           alt={academicPackage.name}
@@ -64,8 +66,8 @@ const PackageDetailPage: React.FC = () => {
         </div>
       </div>
       
-      <div className="bg-white p-4 rounded-t-3xl -mt-6 relative z-10">
-        <h1 className="text-xl font-bold text-prelobook-primary">
+      <div className="bg-white p-4 sm:p-6 rounded-t-3xl -mt-6 relative z-10 shadow-sm">
+        <h1 className="text-xl sm:text-2xl font-bold text-prelobook-primary">
           {academicPackage.name}
         </h1>
         
@@ -75,11 +77,11 @@ const PackageDetailPage: React.FC = () => {
           <span>{academicPackage.category}</span>
         </div>
         
-        <div className="mt-4">
+        <div className="mt-4 flex items-baseline flex-wrap">
           <span className="text-sm text-gray-500 line-through mr-2">
             {formatPrice(academicPackage.price)}
           </span>
-          <span className="text-xl font-bold text-prelobook-accent">
+          <span className="text-xl sm:text-2xl font-bold text-prelobook-accent">
             {formatPrice(discountedPrice)}
           </span>
           <span className="ml-2 text-sm text-green-600">
@@ -92,19 +94,19 @@ const PackageDetailPage: React.FC = () => {
             Isi Paket ({packageBooks.length} buku)
           </h2>
           
-          <div className="mt-4 space-y-3">
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {packageBooks.map((book) => (
               book && <BookCard key={book.id} book={book} compact />
             ))}
           </div>
         </div>
         
-        <div className="flex gap-3 mt-6">
+        <div className={`flex gap-3 mt-6 ${isMobile ? "flex-col" : ""}`}>
           <Button
-            className="flex-grow bg-prelobook-accent hover:bg-prelobook-accent/90"
+            className="flex-grow bg-prelobook-accent hover:bg-prelobook-accent/90 text-sm sm:text-base"
             onClick={handleAddToCart}
           >
-            <ShoppingCart className="mr-2 h-5 w-5" />
+            <ShoppingCart className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Tambahkan ke Keranjang
           </Button>
           
@@ -114,6 +116,7 @@ const PackageDetailPage: React.FC = () => {
             onClick={handleChatSeller}
           >
             <MessageCircle className="h-5 w-5" />
+            <span className="ml-2">Chat Penjual</span>
           </Button>
         </div>
       </div>

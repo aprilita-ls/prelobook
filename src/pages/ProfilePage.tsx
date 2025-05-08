@@ -55,10 +55,10 @@ const ProfilePage: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-prelobook-background pb-16">
+    <div className="min-h-screen bg-prelobook-background pb-24">
       <Header title="Profil" />
       
-      <div className="p-4">
+      <div className="p-3 sm:p-4 space-y-4">
         <div className="bg-white rounded-lg p-4 shadow-sm">
           <div className="flex items-center">
             <Avatar className="h-16 w-16 border-2 border-prelobook-accent">
@@ -87,11 +87,11 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
         
-        <div className="bg-white rounded-lg mt-4 shadow-sm">
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           {menuItems.map((item, index) => (
             <React.Fragment key={item.path}>
               <div
-                className="flex items-center justify-between p-4"
+                className="flex items-center justify-between p-4 hover:bg-gray-50 active:bg-gray-100 transition-colors cursor-pointer"
                 onClick={() => navigate(item.path)}
               >
                 <div className="flex items-center">
@@ -107,7 +107,7 @@ const ProfilePage: React.FC = () => {
         
         <Button
           variant="outline"
-          className="w-full mt-6 border-red-500 text-red-500"
+          className="w-full border-red-500 text-red-500 hover:bg-red-50"
           onClick={handleLogout}
         >
           <LogOut className="mr-2 h-5 w-5" />

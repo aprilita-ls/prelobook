@@ -61,22 +61,22 @@ const CatalogPage: React.FC = () => {
     });
 
   return (
-    <div className="min-h-screen bg-prelobook-background pb-20">
+    <div className="min-h-screen bg-prelobook-background pb-24">
       <Header title="Katalog Buku" />
 
-      <div className="px-4 pt-2 pb-20">
+      <div className="px-3 sm:px-4 pt-2 pb-20">
         <SearchBar
           placeholder="Cari judul, penulis, atau penerbit..."
           onSearch={handleSearch}
           className="mb-3"
         />
 
-        <div className="mb-3 flex overflow-x-auto py-2 gap-2 no-scrollbar">
+        <div className="mb-3 flex overflow-x-auto py-2 gap-2 no-scrollbar -mx-1 px-1">
           {categories.map((category) => (
             <Button
               key={category.id}
               variant={selectedCategory === category.id ? "default" : "outline"}
-              className={`text-xs py-1 px-3 h-8 whitespace-nowrap ${
+              className={`text-xs py-1 px-3 h-8 whitespace-nowrap flex-shrink-0 ${
                 selectedCategory === category.id
                   ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
                   : "bg-white text-gray-700"
@@ -106,7 +106,7 @@ const CatalogPage: React.FC = () => {
                 </span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-40">
+            <DropdownMenuContent align="start" className="w-40 z-50">
               <DropdownMenuItem onClick={() => handleSortChange("newest")} className="text-sm">
                 Terbaru
               </DropdownMenuItem>
@@ -152,7 +152,7 @@ const CatalogPage: React.FC = () => {
             <p className="text-gray-500">Tidak ada buku yang ditemukan</p>
           </div>
         ) : viewMode === "grid" ? (
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
             {filteredBooks.map((book) => (
               <BookCard key={book.id} book={book} showChatButton={true} />
             ))}
@@ -160,7 +160,7 @@ const CatalogPage: React.FC = () => {
         ) : (
           <div className="flex flex-col gap-2.5">
             {filteredBooks.map((book) => (
-              <BookCard key={book.id} book={book} compact />
+              <BookCard key={book.id} book={book} compact showChatButton={true} />
             ))}
           </div>
         )}

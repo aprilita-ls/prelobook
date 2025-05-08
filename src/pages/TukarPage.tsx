@@ -24,21 +24,21 @@ const TukarPage: React.FC = () => {
   );
   
   return (
-    <div className="min-h-screen bg-prelobook-background pb-16">
+    <div className="min-h-screen bg-prelobook-background pb-24">
       <div className="bg-prelobook-accent text-white p-4">
         <h1 className="text-xl font-bold">Tukar Buku</h1>
         <p className="text-sm opacity-90">Tukarkan buku lama Anda dengan buku baru</p>
       </div>
       
-      <div className="p-4">
-        <div className="flex flex-col gap-3 mb-6">
+      <div className="p-3 sm:p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
           <div className="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3">
-            <div className="bg-prelobook-accent/10 p-3 rounded-full">
-              <BookOpen className="h-6 w-6 text-prelobook-accent" />
+            <div className="bg-prelobook-accent/10 p-3 rounded-full flex-shrink-0">
+              <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-prelobook-accent" />
             </div>
-            <div className="flex-1">
-              <h3 className="font-medium text-prelobook-primary">Buku Saya</h3>
-              <p className="text-xs text-gray-500">Lihat koleksi buku yang dapat ditukar</p>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium text-prelobook-primary truncate">Buku Saya</h3>
+              <p className="text-xs text-gray-500 truncate">Lihat koleksi buku yang dapat ditukar</p>
             </div>
             <Button 
               size="sm" 
@@ -51,12 +51,12 @@ const TukarPage: React.FC = () => {
           </div>
           
           <div className="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3">
-            <div className="bg-prelobook-accent/10 p-3 rounded-full">
-              <Plus className="h-6 w-6 text-prelobook-accent" />
+            <div className="bg-prelobook-accent/10 p-3 rounded-full flex-shrink-0">
+              <Plus className="h-5 w-5 sm:h-6 sm:w-6 text-prelobook-accent" />
             </div>
-            <div className="flex-1">
-              <h3 className="font-medium text-prelobook-primary">Tambah Buku</h3>
-              <p className="text-xs text-gray-500">Tambahkan buku ke koleksi tukar Anda</p>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium text-prelobook-primary truncate">Tambah Buku</h3>
+              <p className="text-xs text-gray-500 truncate">Tambahkan buku ke koleksi tukar Anda</p>
             </div>
             <Button 
               size="sm" 
@@ -69,12 +69,12 @@ const TukarPage: React.FC = () => {
           </div>
           
           <div className="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3">
-            <div className="bg-prelobook-accent/10 p-3 rounded-full">
-              <BookOpenCheck className="h-6 w-6 text-prelobook-accent" />
+            <div className="bg-prelobook-accent/10 p-3 rounded-full flex-shrink-0">
+              <BookOpenCheck className="h-5 w-5 sm:h-6 sm:w-6 text-prelobook-accent" />
             </div>
-            <div className="flex-1">
-              <h3 className="font-medium text-prelobook-primary">Riwayat Tukar</h3>
-              <p className="text-xs text-gray-500">Lihat riwayat penukaran buku Anda</p>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium text-prelobook-primary truncate">Riwayat Tukar</h3>
+              <p className="text-xs text-gray-500 truncate">Lihat riwayat penukaran buku Anda</p>
             </div>
             <Button 
               size="sm" 
@@ -87,12 +87,12 @@ const TukarPage: React.FC = () => {
           </div>
           
           <div className="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3">
-            <div className="bg-prelobook-accent/10 p-3 rounded-full">
-              <RefreshCw className="h-6 w-6 text-prelobook-accent" />
+            <div className="bg-prelobook-accent/10 p-3 rounded-full flex-shrink-0">
+              <RefreshCw className="h-5 w-5 sm:h-6 sm:w-6 text-prelobook-accent" />
             </div>
-            <div className="flex-1">
-              <h3 className="font-medium text-prelobook-primary">Tukar Tambah</h3>
-              <p className="text-xs text-gray-500">Ajukan tukar tambah dengan buku baru</p>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium text-prelobook-primary truncate">Tukar Tambah</h3>
+              <p className="text-xs text-gray-500 truncate">Ajukan tukar tambah dengan buku baru</p>
             </div>
             <Button 
               size="sm" 
@@ -116,11 +116,11 @@ const TukarPage: React.FC = () => {
           />
         </div>
         
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
           {filteredBooks.slice(0, 6).map((book) => (
             <BookCard key={book.id} book={book}>
               <Button
-                className="w-full mt-3 bg-prelobook-accent hover:bg-prelobook-accent/90"
+                className="w-full mt-2 bg-prelobook-accent hover:bg-prelobook-accent/90"
                 size="sm"
                 onClick={() => navigate(`/chat/seller-${book.id}`)}
               >
