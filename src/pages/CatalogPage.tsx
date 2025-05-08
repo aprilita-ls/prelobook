@@ -154,7 +154,7 @@ const CatalogPage: React.FC = () => {
         ) : viewMode === "grid" ? (
           <div className="grid grid-cols-2 gap-2.5">
             {filteredBooks.map((book) => (
-              <BookCard key={book.id} book={book} />
+              <BookCard key={book.id} book={book} showChatButton={true} />
             ))}
           </div>
         ) : (

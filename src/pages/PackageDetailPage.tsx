@@ -5,7 +5,7 @@ import { academicPackages, books } from "@/data/mockData";
 import Header from "@/components/Header";
 import BookCard from "@/components/BookCard";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, MessageCircle } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import BottomNavigation from "@/components/BottomNavigation";
 
@@ -43,6 +43,10 @@ const PackageDetailPage: React.FC = () => {
       title: "Berhasil ditambahkan ke keranjang",
       description: `${academicPackage.name} telah ditambahkan ke keranjang.`,
     });
+  };
+  
+  const handleChatSeller = () => {
+    window.location.href = `/chat/package-${academicPackage.id}`;
   };
   
   return (
@@ -95,13 +99,23 @@ const PackageDetailPage: React.FC = () => {
           </div>
         </div>
         
-        <Button
-          className="w-full mt-6 bg-prelobook-accent hover:bg-prelobook-accent/90"
-          onClick={handleAddToCart}
-        >
-          <ShoppingCart className="mr-2 h-5 w-5" />
-          Tambahkan ke Keranjang
-        </Button>
+        <div className="flex gap-3 mt-6">
+          <Button
+            className="flex-grow bg-prelobook-accent hover:bg-prelobook-accent/90"
+            onClick={handleAddToCart}
+          >
+            <ShoppingCart className="mr-2 h-5 w-5" />
+            Tambahkan ke Keranjang
+          </Button>
+          
+          <Button
+            variant="outline"
+            className="border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white"
+            onClick={handleChatSeller}
+          >
+            <MessageCircle className="h-5 w-5" />
+          </Button>
+        </div>
       </div>
       
       <BottomNavigation />

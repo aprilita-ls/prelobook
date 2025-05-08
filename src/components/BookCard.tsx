@@ -1,6 +1,6 @@
 
 import React from "react";
-import { ShoppingCart, Star } from "lucide-react";
+import { ShoppingCart, Star, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Book } from "@/data/mockData";
@@ -9,9 +9,10 @@ interface BookCardProps {
   book: Book;
   compact?: boolean;
   children?: React.ReactNode;
+  showChatButton?: boolean;
 }
 
-const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children }) => {
+const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, showChatButton = false }) => {
   const discountedPrice = book.discount
     ? book.price - (book.price * book.discount) / 100
     : book.price;
@@ -51,8 +52,8 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children }) 
   }
 
   return (
-    <Link to={`/buku/${book.id}`} className="block">
-      <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+      <Link to={`/buku/${book.id}`} className="block">
         <div className="relative">
           <img
             src={book.coverImage}
@@ -91,22 +92,40 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children }) 
               {formatPrice(discountedPrice)}
             </span>
           </div>
+        </div>
+      </Link>
 
-          {children}
+      <div className="px-3 pb-3">
+        {children}
 
-          {!children && (
+        {!children && (
+          <div className="flex gap-2">
             <Button
               variant="outline"
               size="sm"
-              className="w-full mt-3 border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white"
+              className="flex-1 border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white"
             >
               <ShoppingCart className="mr-2 h-4 w-4" />
               Keranjang
             </Button>
-          )}
-        </div>
+            
+            {showChatButton && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.href = `/chat/seller-${book.id}`;
+                }}
+              >
+                <MessageCircle className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+        )}
       </div>
-    </Link>
+    </div>
   );
 };
 

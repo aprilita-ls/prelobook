@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -6,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
+import { academicPackages, books } from "@/data/mockData";
 
 interface Message {
   id: string;
@@ -16,8 +18,17 @@ interface Message {
   timestamp: string;
 }
 
+interface ChatData {
+  [key: string]: {
+    id: string;
+    name: string;
+    avatar: string;
+    messages: Message[];
+  };
+}
+
 // Mock data for this specific conversation about stock/condition
-const chatData = {
+const chatData: ChatData = {
   "1": {
     id: "1",
     name: "Customer Service",
@@ -110,17 +121,118 @@ const ChatDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [newMessage, setNewMessage] = useState("");
+  const [chat, setChat] = useState<any>(null);
   
-  // Default to the first chat if no ID is provided
-  const chatId = id || "1";
-  const chat = chatData[chatId as keyof typeof chatData];
+  useEffect(() => {
+    if (!id) return;
+    
+    // Check if it's a predefined chat
+    if (chatData[id]) {
+      setChat(chatData[id]);
+      return;
+    }
+    
+    // Handle seller-book chats
+    if (id.startsWith("seller-")) {
+      const bookId = id.replace("seller-", "");
+      const book = books.find(b => b.id === bookId);
+      
+      if (book) {
+        // Create a new chat for this seller
+        setChat({
+          id: id,
+          name: `Penjual ${book.title}`,
+          avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop",
+          messages: [
+            {
+              id: "m1",
+              text: `Halo, saya tertarik dengan buku ${book.title}`,
+              sender: "user",
+              timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            },
+            {
+              id: "m2",
+              text: `Terima kasih atas ketertarikan Anda pada buku ${book.title}. Ada yang ingin ditanyakan tentang buku ini?`,
+              sender: "admin",
+              timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            }
+          ]
+        });
+        return;
+      }
+    }
+    
+    // Handle package chats
+    if (id.startsWith("package-")) {
+      const packageId = id.replace("package-", "");
+      const academicPackage = academicPackages.find(p => p.id === packageId);
+      
+      if (academicPackage) {
+        // Create a new chat for this package
+        setChat({
+          id: id,
+          name: `Penjual Paket ${academicPackage.name}`,
+          avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+          messages: [
+            {
+              id: "m1",
+              text: `Halo, saya tertarik dengan paket ${academicPackage.name}`,
+              sender: "user",
+              timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            },
+            {
+              id: "m2",
+              text: `Terima kasih atas ketertarikan Anda pada paket ${academicPackage.name}. Paket ini berisi ${academicPackage.bookCount} buku. Ada yang ingin ditanyakan?`,
+              sender: "admin",
+              timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            }
+          ]
+        });
+        return;
+      }
+    }
+    
+    // If no match found, create a generic new chat
+    setChat({
+      id: id,
+      name: "Penjual",
+      avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop",
+      messages: [
+        {
+          id: "m1",
+          text: "Halo, ada yang bisa saya bantu?",
+          sender: "admin",
+          timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+        }
+      ]
+    });
+  }, [id]);
   
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newMessage.trim()) return;
+    if (!newMessage.trim() || !chat) return;
     
-    // In a real app, this would send the message to the server
-    // For now, we'll just clear the input
+    // Add the user's message
+    const userMessage = {
+      id: `m${chat.messages.length + 1}`,
+      text: newMessage,
+      sender: "user" as const,
+      timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+    };
+    
+    // Add a response from the admin
+    const adminMessage = {
+      id: `m${chat.messages.length + 2}`,
+      text: "Terima kasih atas pertanyaannya. Saya akan segera membantu Anda.",
+      sender: "admin" as const,
+      timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+    };
+    
+    setChat({
+      ...chat,
+      messages: [...chat.messages, userMessage, adminMessage]
+    });
+    
     setNewMessage("");
   };
   
@@ -143,7 +255,7 @@ const ChatDetailPage: React.FC = () => {
       
       <ScrollArea className="flex-grow px-4 py-4">
         <div className="space-y-4">
-          {chat.messages.map((message) => (
+          {chat.messages.map((message: Message) => (
             <div
               key={message.id}
               className={`flex ${

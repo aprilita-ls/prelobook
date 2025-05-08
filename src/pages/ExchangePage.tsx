@@ -4,7 +4,7 @@ import { books } from "@/data/mockData";
 import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
 import BookCard from "@/components/BookCard";
-import { FilterX, SlidersHorizontal } from "lucide-react";
+import { FilterX, SlidersHorizontal, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -133,16 +133,16 @@ const ExchangePage: React.FC = () => {
         ) : (
           <div className="grid grid-cols-2 gap-3">
             {filteredBooks.map((book) => (
-              <div key={book.id} className="relative">
-                <BookCard book={book} />
+              <BookCard key={book.id} book={book} showChatButton={true}>
                 <Button
-                  className="absolute bottom-3 left-3 right-3 bg-prelobook-accent hover:bg-prelobook-accent/90"
+                  className="w-full mb-2 bg-prelobook-accent hover:bg-prelobook-accent/90"
                   size="sm"
                   onClick={() => navigate(`/chat/seller-${book.id}`)}
                 >
+                  <MessageCircle className="mr-2 h-4 w-4" />
                   Ajukan Tukar
                 </Button>
-              </div>
+              </BookCard>
             ))}
           </div>
         )}
