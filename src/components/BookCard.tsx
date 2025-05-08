@@ -4,6 +4,7 @@ import { ShoppingCart, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Book } from "@/data/mockData";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface BookCardProps {
   book: Book;
@@ -13,6 +14,8 @@ interface BookCardProps {
 }
 
 const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, showChatButton = false }) => {
+  const isMobile = useIsMobile();
+  
   const discountedPrice = book.discount
     ? book.price - (book.price * book.discount) / 100
     : book.price;
@@ -26,6 +29,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
     }).format(price);
   };
 
+  // Mobile-friendly compact design
   if (compact) {
     return (
       <Link to={`/buku/${book.id}`} className="block">
@@ -35,7 +39,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
             alt={book.title}
             className="w-16 h-20 object-cover rounded shadow-sm"
           />
-          <div className="flex-1">
+          <div className="flex-1 min-w-0"> {/* Added min-width to prevent overflow */}
             <h3 className="text-sm font-medium line-clamp-1">{book.title}</h3>
             <p className="text-xs text-gray-500 line-clamp-1">{book.author}</p>
             <div className="flex items-center mt-1">
@@ -45,15 +49,46 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
             <p className="font-semibold text-prelobook-accent mt-1">
               {formatPrice(discountedPrice)}
             </p>
+            
+            {/* Compact action buttons for mobile view */}
+            {!children && (
+              <div className="flex gap-1.5 mt-1">
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="h-7 px-2 text-xs bg-prelobook-accent hover:bg-prelobook-accent/90 text-white rounded-full shadow-sm"
+                >
+                  <ShoppingCart className="mr-1 h-3 w-3" />
+                  Keranjang
+                </Button>
+                
+                {showChatButton && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 w-7 p-0 rounded-full border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent/10 flex items-center justify-center shadow-sm"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.location.href = `/chat/seller-${book.id}`;
+                    }}
+                  >
+                    <MessageCircle className="h-3 w-3" />
+                  </Button>
+                )}
+              </div>
+            )}
+            {children && <div className="mt-1">{children}</div>}
           </div>
         </div>
       </Link>
     );
   }
 
+  // Standard card layout with responsive buttons
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-200">
-      <Link to={`/buku/${book.id}`} className="block">
+    <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 h-full flex flex-col">
+      <Link to={`/buku/${book.id}`} className="block flex-1">
         <div className="relative">
           <img
             src={book.coverImage}
@@ -71,7 +106,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
         </div>
 
         <div className="p-3">
-          <h3 className="font-medium text-sm line-clamp-2 h-10">{book.title}</h3>
+          <h3 className="font-medium text-sm line-clamp-2 min-h-[2.5rem]">{book.title}</h3>
           <p className="text-xs text-gray-500 mt-1">{book.author}</p>
 
           <div className="flex items-center mt-2">
@@ -95,31 +130,31 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
         </div>
       </Link>
 
-      <div className="px-3 pb-3">
+      <div className="px-3 pb-3 mt-auto">
         {children}
 
         {!children && (
           <div className="flex gap-2">
             <Button
               variant="default"
-              size="sm"
-              className="flex-1 bg-prelobook-accent hover:bg-prelobook-accent/90 text-white transition-colors duration-200 font-medium"
+              size={isMobile ? "sm" : "default"}
+              className={`flex-1 bg-prelobook-accent hover:bg-prelobook-accent/90 text-white transition-colors duration-200 font-medium ${isMobile ? 'text-xs py-1.5' : ''} rounded-full shadow-sm`}
             >
-              <ShoppingCart className="mr-1.5 h-3.5 w-3.5" />
+              <ShoppingCart className={`${isMobile ? 'mr-1 h-3.5 w-3.5' : 'mr-1.5 h-4 w-4'}`} />
               Keranjang
             </Button>
             
             {showChatButton && (
               <Button
                 variant="outline"
-                size="sm"
-                className="border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent/10 transition-colors duration-200"
+                size={isMobile ? "sm" : "default"}
+                className={`border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent/10 transition-colors duration-200 ${isMobile ? 'w-8 h-8 p-0' : 'w-10 h-10 p-0'} rounded-full flex items-center justify-center shadow-sm`}
                 onClick={(e) => {
                   e.preventDefault();
                   window.location.href = `/chat/seller-${book.id}`;
                 }}
               >
-                <MessageCircle className="h-3.5 w-3.5" />
+                <MessageCircle className={isMobile ? "h-3.5 w-3.5" : "h-4 w-4"} />
               </Button>
             )}
           </div>

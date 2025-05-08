@@ -13,14 +13,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import BottomNavigation from "@/components/BottomNavigation";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type SortOption = "newest" | "cheapest" | "bestSeller";
 type ViewMode = "grid" | "list";
 
 const CatalogPage: React.FC = () => {
+  const isMobile = useIsMobile();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortOption, setSortOption] = useState<SortOption>("newest");
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [viewMode, setViewMode] = useState<ViewMode>(isMobile ? "list" : "grid");
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (term: string) => {
@@ -78,7 +80,7 @@ const CatalogPage: React.FC = () => {
               variant={selectedCategory === category.id ? "default" : "outline"}
               className={`text-xs py-1 px-3 h-8 whitespace-nowrap flex-shrink-0 rounded-full transition-all duration-200 ${
                 selectedCategory === category.id
-                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
+                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90 shadow-sm"
                   : "bg-white text-gray-700 hover:bg-gray-100"
               }`}
               onClick={() => handleCategorySelect(category.id)}
@@ -94,7 +96,7 @@ const CatalogPage: React.FC = () => {
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-white text-gray-700 h-8 px-3 hover:bg-gray-100"
+                className="bg-white text-gray-700 h-8 px-3 hover:bg-gray-100 rounded-full shadow-sm"
               >
                 <SlidersHorizontal className="h-3.5 w-3.5 mr-1.5" />
                 <span className="text-xs">
@@ -123,9 +125,9 @@ const CatalogPage: React.FC = () => {
             <Button
               variant="outline"
               size="sm"
-              className={`p-1.5 h-8 w-8 ${
+              className={`p-1.5 h-8 w-8 rounded-full ${
                 viewMode === "grid"
-                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
+                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90 shadow-sm"
                   : "bg-white text-gray-700 hover:bg-gray-100"
               }`}
               onClick={() => setViewMode("grid")}
@@ -135,9 +137,9 @@ const CatalogPage: React.FC = () => {
             <Button
               variant="outline"
               size="sm"
-              className={`p-1.5 h-8 w-8 ${
+              className={`p-1.5 h-8 w-8 rounded-full ${
                 viewMode === "list"
-                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90"
+                  ? "bg-prelobook-accent text-white hover:bg-prelobook-accent/90 shadow-sm"
                   : "bg-white text-gray-700 hover:bg-gray-100"
               }`}
               onClick={() => setViewMode("list")}
