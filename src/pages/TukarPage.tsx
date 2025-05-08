@@ -40,7 +40,12 @@ const TukarPage: React.FC = () => {
               <h3 className="font-medium text-prelobook-primary">Buku Saya</h3>
               <p className="text-xs text-gray-500">Lihat koleksi buku yang dapat ditukar</p>
             </div>
-            <Button size="sm" variant="outline" className="shrink-0">
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="shrink-0"
+              onClick={() => navigate("/my-books")}
+            >
               Lihat
             </Button>
           </div>
@@ -53,7 +58,12 @@ const TukarPage: React.FC = () => {
               <h3 className="font-medium text-prelobook-primary">Tambah Buku</h3>
               <p className="text-xs text-gray-500">Tambahkan buku ke koleksi tukar Anda</p>
             </div>
-            <Button size="sm" variant="outline" className="shrink-0">
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="shrink-0"
+              onClick={() => navigate("/add-book")}
+            >
               Tambah
             </Button>
           </div>
@@ -66,7 +76,12 @@ const TukarPage: React.FC = () => {
               <h3 className="font-medium text-prelobook-primary">Riwayat Tukar</h3>
               <p className="text-xs text-gray-500">Lihat riwayat penukaran buku Anda</p>
             </div>
-            <Button size="sm" variant="outline" className="shrink-0">
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="shrink-0"
+              onClick={() => navigate("/exchange-history")}
+            >
               Lihat
             </Button>
           </div>
@@ -107,6 +122,7 @@ const TukarPage: React.FC = () => {
               <Button
                 className="w-full mt-3 bg-prelobook-accent hover:bg-prelobook-accent/90"
                 size="sm"
+                onClick={() => navigate(`/chat/seller-${book.id}`)}
               >
                 Tukar
               </Button>

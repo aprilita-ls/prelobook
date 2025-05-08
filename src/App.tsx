@@ -17,6 +17,9 @@ import ExchangePage from "./pages/ExchangePage";
 import TukarPage from "./pages/TukarPage";
 import ChatHistoryPage from "./pages/ChatHistoryPage";
 import ChatDetailPage from "./pages/ChatDetailPage";
+import MyBooksPage from "./pages/MyBooksPage";
+import AddBookPage from "./pages/AddBookPage";
+import ExchangeHistoryPage from "./pages/ExchangeHistoryPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +39,10 @@ const App = () => (
           <Route path="/keranjang" element={<CartPage />} />
           <Route path="/profil" element={<ProfilePage />} />
           <Route path="/tukar" element={<TukarPage />} />
+          <Route path="/exchange" element={<ExchangePage />} />
+          <Route path="/my-books" element={<MyBooksPage />} />
+          <Route path="/add-book" element={<AddBookPage />} />
+          <Route path="/exchange-history" element={<ExchangeHistoryPage />} />
           <Route path="/chat" element={<ChatHistoryPage />} />
           <Route path="/chat/:id" element={<ChatDetailPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

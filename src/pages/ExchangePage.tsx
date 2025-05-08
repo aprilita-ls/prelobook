@@ -15,12 +15,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import BottomNavigation from "@/components/BottomNavigation";
+import { useNavigate } from "react-router-dom";
 
 type Condition = 'Baru' | 'Sangat Baik' | 'Baik' | 'Cukup Baik';
 
 const ExchangePage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedConditions, setSelectedConditions] = useState<Condition[]>([]);
+  const navigate = useNavigate();
   
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -136,6 +138,7 @@ const ExchangePage: React.FC = () => {
                 <Button
                   className="absolute bottom-3 left-3 right-3 bg-prelobook-accent hover:bg-prelobook-accent/90"
                   size="sm"
+                  onClick={() => navigate(`/chat/seller-${book.id}`)}
                 >
                   Ajukan Tukar
                 </Button>
