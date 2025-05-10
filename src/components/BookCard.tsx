@@ -2,7 +2,7 @@
 import React from "react";
 import { ShoppingCart, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Book } from "@/data/mockData";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -15,6 +15,7 @@ interface BookCardProps {
 
 const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, showChatButton = false }) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   
   const discountedPrice = book.discount
     ? book.price - (book.price * book.discount) / 100
@@ -27,6 +28,12 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
+  };
+  
+  const handleChatClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(`/chat/seller-${book.id}`);
   };
 
   // Mobile-friendly compact design
@@ -67,11 +74,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
                     variant="outline"
                     size="sm"
                     className="h-7 w-7 p-0 rounded-full border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent/10 flex items-center justify-center shadow-sm"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      window.location.href = `/chat/seller-${book.id}`;
-                    }}
+                    onClick={handleChatClick}
                   >
                     <MessageCircle className="h-3 w-3" />
                   </Button>
@@ -149,10 +152,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, compact = false, children, sh
                 variant="outline"
                 size={isMobile ? "sm" : "default"}
                 className={`border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent/10 transition-colors duration-200 ${isMobile ? 'w-8 h-8 p-0' : 'w-10 h-10 p-0'} rounded-full flex items-center justify-center shadow-sm`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.href = `/chat/seller-${book.id}`;
-                }}
+                onClick={handleChatClick}
               >
                 <MessageCircle className={isMobile ? "h-3.5 w-3.5" : "h-4 w-4"} />
               </Button>
