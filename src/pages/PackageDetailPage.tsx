@@ -21,8 +21,8 @@ const PackageDetailPage: React.FC = () => {
   
   if (!academicPackage) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <p>Paket tidak ditemukan</p>
+      <div className="min-h-screen flex justify-center items-center bg-prelobook-background">
+        <p className="p-4 bg-white rounded-xl shadow-md text-prelobook-primary">Paket tidak ditemukan</p>
       </div>
     );
   }
@@ -87,45 +87,62 @@ const PackageDetailPage: React.FC = () => {
     <div className="min-h-screen bg-prelobook-background pb-24">
       <Header showBack />
       
-      <div className="relative h-48 sm:h-64">
+      <div className="relative h-52 sm:h-64 bg-white">
         <img
           src={academicPackage.coverImage}
           alt={academicPackage.name}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
-        <div className="absolute top-2 right-2 bg-prelobook-accent text-white text-xs px-2 py-1 rounded-full">
+        <div className="absolute top-3 right-3 bg-prelobook-accent text-white text-xs px-3 py-1 rounded-full shadow-sm">
           -{academicPackage.discount}%
         </div>
       </div>
       
-      <div className="bg-white p-4 sm:p-6 rounded-t-3xl -mt-6 relative z-10 shadow-sm">
+      <div className="bg-white p-5 rounded-t-3xl -mt-6 relative z-10 shadow-sm">
         <h1 className="text-xl sm:text-2xl font-bold text-prelobook-primary">
           {academicPackage.name}
         </h1>
         
-        <div className="flex items-center mt-1 text-sm text-gray-600">
-          <span>{academicPackage.bookCount} buku</span>
-          <span className="mx-2">•</span>
-          <span>{academicPackage.category}</span>
+        <div className="flex items-center mt-2 text-sm text-gray-600">
+          <span className="flex items-center gap-1">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 4H18C20.2091 4 22 5.79086 22 8V16C22 18.2091 20.2091 20 18 20H6C3.79086 20 2 18.2091 2 16V8C2 5.79086 3.79086 4 6 4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 12H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M17 12H17.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M7 12H7.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            {academicPackage.bookCount} buku
+          </span>
+          <span className="mx-2 text-gray-300">•</span>
+          <span className="flex items-center gap-1">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.5 14.25V11.25C19.5 9.76472 18.4353 8.5 17 8.5H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12.9 7.55L10 4.5L7.1 7.55" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M4.5 14.25V16.5C4.5 18.1569 5.84315 19.5 7.5 19.5H16.5C18.1569 19.5 19.5 18.1569 19.5 16.5V14.25" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            {academicPackage.category}
+          </span>
         </div>
         
-        <div className="mt-4 flex items-baseline flex-wrap">
-          <span className="text-sm text-gray-500 line-through mr-2">
-            {formatPrice(academicPackage.price)}
-          </span>
-          <span className="text-xl sm:text-2xl font-bold text-prelobook-accent">
-            {formatPrice(discountedPrice)}
-          </span>
-          <span className="ml-2 text-sm text-green-600">
-            Hemat {formatPrice(academicPackage.price - discountedPrice)}
-          </span>
+        <div className="mt-4 bg-prelobook-background/50 p-4 rounded-xl">
+          <div className="flex items-baseline flex-wrap">
+            <span className="text-sm text-gray-500 line-through mr-2">
+              {formatPrice(academicPackage.price)}
+            </span>
+            <span className="text-xl sm:text-2xl font-bold text-prelobook-accent">
+              {formatPrice(discountedPrice)}
+            </span>
+            <span className="ml-2 text-sm text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+              Hemat {formatPrice(academicPackage.price - discountedPrice)}
+            </span>
+          </div>
         </div>
         
         {/* Seller Rating Section - Only show if we have a seller */}
         {seller && (
-          <div className="border-t border-gray-200 mt-4 pt-4">
+          <div className="border-t border-gray-200 mt-5 pt-4">
             <h2 className="text-base font-semibold text-prelobook-primary mb-3">Penjual</h2>
-            <div className="bg-prelobook-background/30 p-3 rounded-lg">
+            <div className="bg-prelobook-background/30 p-4 rounded-xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <img
@@ -201,8 +218,8 @@ const PackageDetailPage: React.FC = () => {
           </div>
         )}
         
-        <div className="border-t border-gray-200 mt-4 pt-4">
-          <h2 className="text-lg font-semibold text-prelobook-primary">
+        <div className="border-t border-gray-200 mt-5 pt-4">
+          <h2 className="text-lg font-semibold text-prelobook-primary mb-3">
             Isi Paket ({packageBooks.length} buku)
           </h2>
           
@@ -224,7 +241,7 @@ const PackageDetailPage: React.FC = () => {
           
           <Button
             variant="outline"
-            className="border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white rounded-full shadow-sm"
+            className="border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent/10 rounded-full shadow-sm"
             onClick={handleChatSeller}
           >
             <MessageCircle className="h-5 w-5" />
