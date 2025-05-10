@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { books, sellers } from "@/data/mockData";
 import Header from "@/components/Header";
-import { Star, MessageSquare, ShoppingCart, Heart } from "lucide-react";
+import { Star, MessageSquare, ShoppingCart, Heart, ThumbsUp, ThumbsDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/use-toast";
@@ -27,6 +27,8 @@ const BookDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const [activeImage, setActiveImage] = useState(0);
   const [isWishlist, setIsWishlist] = useState(false);
+  const [hasRated, setHasRated] = useState(false);
+  const [ratingSubmitted, setRatingSubmitted] = useState(false);
   
   const book = books.find((b) => b.id === id);
   
@@ -69,7 +71,7 @@ const BookDetailPage: React.FC = () => {
   };
   
   const handleChatSeller = () => {
-    navigate(`/chat/seller-${book.id}`);
+    navigate(`/chat/seller-${book.sellerId}`);
   };
 
   const toggleWishlist = () => {
@@ -80,6 +82,26 @@ const BookDetailPage: React.FC = () => {
         ? `${book.title} telah dihapus dari wishlist` 
         : `${book.title} telah ditambahkan ke wishlist`,
     });
+  };
+
+  const handleRateSeller = (isPositive: boolean) => {
+    if (!hasRated) {
+      setHasRated(true);
+      setRatingSubmitted(true);
+      
+      toast({
+        title: "Rating Berhasil",
+        description: `Terima kasih telah memberikan rating ${isPositive ? "positif" : "negatif"} untuk ${seller?.name}.`,
+      });
+      
+      // In a real app, we would send this rating to the backend
+      console.log(`User rated seller ${seller?.id} with a ${isPositive ? "positive" : "negative"} rating`);
+      
+      // Reset rating submitted status after 2 seconds
+      setTimeout(() => {
+        setRatingSubmitted(false);
+      }, 2000);
+    }
   };
 
   // In a real app, each book would have multiple images
@@ -202,32 +224,79 @@ const BookDetailPage: React.FC = () => {
         {seller && (
           <div className="border-t border-gray-200 mt-5 pt-4">
             <h2 className="text-base font-semibold text-prelobook-primary mb-3">Penjual</h2>
-            <div className="flex items-center justify-between bg-prelobook-background/30 p-3 rounded-lg">
-              <div className="flex items-center">
-                <img
-                  src={seller.avatar}
-                  alt={seller.name}
-                  className="w-12 h-12 rounded-full mr-3 object-cover border-2 border-white shadow-sm"
-                />
-                <div>
-                  <p className="font-medium text-sm">{seller.name}</p>
-                  <div className="flex items-center mt-0.5">
-                    <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                    <span className="text-xs ml-1 text-gray-600">
-                      {seller.rating} <span className="text-gray-400">• Online</span>
-                    </span>
+            <div className="flex flex-col bg-prelobook-background/30 p-3 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <img
+                    src={seller.avatar}
+                    alt={seller.name}
+                    className="w-12 h-12 rounded-full mr-3 object-cover border-2 border-white shadow-sm"
+                  />
+                  <div>
+                    <p className="font-medium text-sm">{seller.name}</p>
+                    <div className="flex items-center mt-0.5">
+                      <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                      <span className="text-xs ml-1 text-gray-600">
+                        {seller.rating} <span className="text-gray-400">• Online</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-prelobook-accent text-prelobook-accent h-9 rounded-full hover:bg-prelobook-accent/10 shadow-sm"
+                  onClick={handleChatSeller}
+                >
+                  <MessageSquare className="h-4 w-4 mr-1.5" />
+                  Chat
+                </Button>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-prelobook-accent text-prelobook-accent h-9 rounded-full hover:bg-prelobook-accent/10 shadow-sm"
-                onClick={handleChatSeller}
-              >
-                <MessageSquare className="h-4 w-4 mr-1.5" />
-                Chat
-              </Button>
+              
+              {/* Seller Rating Section */}
+              <div className="mt-3 border-t border-gray-200 pt-3">
+                <p className="text-xs text-gray-600 mb-2">
+                  {hasRated 
+                    ? "Terima kasih telah memberikan rating" 
+                    : "Bagaimana pengalaman Anda dengan penjual ini?"}
+                </p>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "rounded-full border-gray-200 transition-all",
+                      hasRated && "opacity-50 cursor-not-allowed",
+                      ratingSubmitted && "border-green-500"
+                    )}
+                    onClick={() => handleRateSeller(true)}
+                    disabled={hasRated}
+                  >
+                    <ThumbsUp className={cn(
+                      "h-4 w-4 mr-1.5", 
+                      ratingSubmitted && "text-green-500 fill-green-500"
+                    )} />
+                    Puas
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "rounded-full border-gray-200 transition-all",
+                      hasRated && "opacity-50 cursor-not-allowed",
+                      ratingSubmitted && "border-red-500"
+                    )}
+                    onClick={() => handleRateSeller(false)}
+                    disabled={hasRated}
+                  >
+                    <ThumbsDown className={cn(
+                      "h-4 w-4 mr-1.5",
+                      ratingSubmitted && "text-red-500"
+                    )} />
+                    Tidak Puas
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         )}

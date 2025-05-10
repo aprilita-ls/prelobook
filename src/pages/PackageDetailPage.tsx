@@ -1,18 +1,21 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { academicPackages, books } from "@/data/mockData";
+import { academicPackages, books, sellers } from "@/data/mockData";
 import Header from "@/components/Header";
 import BookCard from "@/components/BookCard";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, MessageCircle } from "lucide-react";
+import { ShoppingCart, MessageCircle, ThumbsUp, ThumbsDown, Star } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 const PackageDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const isMobile = useIsMobile();
+  const [hasRated, setHasRated] = useState(false);
+  const [ratingSubmitted, setRatingSubmitted] = useState(false);
   
   const academicPackage = academicPackages.find((p) => p.id === id);
   
@@ -27,6 +30,10 @@ const PackageDetailPage: React.FC = () => {
   const packageBooks = academicPackage.books
     .map((bookId) => books.find((book) => book.id === bookId))
     .filter(Boolean);
+  
+  // For the package page, we'll use the first book's seller as the package seller
+  const firstBook = packageBooks[0];
+  const seller = firstBook ? sellers.find(s => s.id === firstBook.sellerId) : null;
   
   const discountedPrice = 
     academicPackage.price - (academicPackage.price * academicPackage.discount) / 100;
@@ -48,7 +55,32 @@ const PackageDetailPage: React.FC = () => {
   };
   
   const handleChatSeller = () => {
-    window.location.href = `/chat/package-${academicPackage.id}`;
+    // If we have a seller, use that seller ID, otherwise use generic package ID
+    if (seller) {
+      window.location.href = `/chat/seller-${seller.id}`;
+    } else {
+      window.location.href = `/chat/package-${academicPackage.id}`;
+    }
+  };
+  
+  const handleRateSeller = (isPositive: boolean) => {
+    if (!hasRated && seller) {
+      setHasRated(true);
+      setRatingSubmitted(true);
+      
+      toast({
+        title: "Rating Berhasil",
+        description: `Terima kasih telah memberikan rating ${isPositive ? "positif" : "negatif"} untuk ${seller.name}.`,
+      });
+      
+      // In a real app, we would send this rating to the backend
+      console.log(`User rated seller ${seller.id} with a ${isPositive ? "positive" : "negative"} rating`);
+      
+      // Reset rating submitted status after 2 seconds
+      setTimeout(() => {
+        setRatingSubmitted(false);
+      }, 2000);
+    }
   };
   
   return (
@@ -89,6 +121,86 @@ const PackageDetailPage: React.FC = () => {
           </span>
         </div>
         
+        {/* Seller Rating Section - Only show if we have a seller */}
+        {seller && (
+          <div className="border-t border-gray-200 mt-4 pt-4">
+            <h2 className="text-base font-semibold text-prelobook-primary mb-3">Penjual</h2>
+            <div className="bg-prelobook-background/30 p-3 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <img
+                    src={seller.avatar}
+                    alt={seller.name}
+                    className="w-12 h-12 rounded-full mr-3 object-cover border-2 border-white shadow-sm"
+                  />
+                  <div>
+                    <p className="font-medium text-sm">{seller.name}</p>
+                    <div className="flex items-center mt-0.5">
+                      <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                      <span className="text-xs ml-1 text-gray-600">
+                        {seller.rating} <span className="text-gray-400">• Online</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-prelobook-accent text-prelobook-accent h-9 rounded-full hover:bg-prelobook-accent/10 shadow-sm"
+                  onClick={handleChatSeller}
+                >
+                  <MessageCircle className="h-4 w-4 mr-1.5" />
+                  Chat
+                </Button>
+              </div>
+              
+              <div className="mt-3 border-t border-gray-200 pt-3">
+                <p className="text-xs text-gray-600 mb-2">
+                  {hasRated 
+                    ? "Terima kasih telah memberikan rating" 
+                    : "Bagaimana pengalaman Anda dengan penjual ini?"}
+                </p>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "rounded-full border-gray-200 transition-all",
+                      hasRated && "opacity-50 cursor-not-allowed",
+                      ratingSubmitted && "border-green-500"
+                    )}
+                    onClick={() => handleRateSeller(true)}
+                    disabled={hasRated}
+                  >
+                    <ThumbsUp className={cn(
+                      "h-4 w-4 mr-1.5", 
+                      ratingSubmitted && "text-green-500 fill-green-500"
+                    )} />
+                    Puas
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "rounded-full border-gray-200 transition-all",
+                      hasRated && "opacity-50 cursor-not-allowed", 
+                      ratingSubmitted && "border-red-500"
+                    )}
+                    onClick={() => handleRateSeller(false)}
+                    disabled={hasRated}
+                  >
+                    <ThumbsDown className={cn(
+                      "h-4 w-4 mr-1.5",
+                      ratingSubmitted && "text-red-500"
+                    )} />
+                    Tidak Puas
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
         <div className="border-t border-gray-200 mt-4 pt-4">
           <h2 className="text-lg font-semibold text-prelobook-primary">
             Isi Paket ({packageBooks.length} buku)
@@ -103,7 +215,7 @@ const PackageDetailPage: React.FC = () => {
         
         <div className={`flex gap-3 mt-6 ${isMobile ? "flex-col" : ""}`}>
           <Button
-            className="flex-grow bg-prelobook-accent hover:bg-prelobook-accent/90 text-sm sm:text-base"
+            className="flex-grow bg-prelobook-accent hover:bg-prelobook-accent/90 text-sm sm:text-base rounded-full shadow-sm"
             onClick={handleAddToCart}
           >
             <ShoppingCart className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -112,7 +224,7 @@ const PackageDetailPage: React.FC = () => {
           
           <Button
             variant="outline"
-            className="border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white"
+            className="border-prelobook-accent text-prelobook-accent hover:bg-prelobook-accent hover:text-white rounded-full shadow-sm"
             onClick={handleChatSeller}
           >
             <MessageCircle className="h-5 w-5" />
