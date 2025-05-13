@@ -20,6 +20,8 @@ import ChatDetailPage from "./pages/ChatDetailPage";
 import MyBooksPage from "./pages/MyBooksPage";
 import AddBookPage from "./pages/AddBookPage";
 import ExchangeHistoryPage from "./pages/ExchangeHistoryPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +47,8 @@ const App = () => (
           <Route path="/exchange-history" element={<ExchangeHistoryPage />} />
           <Route path="/chat" element={<ChatHistoryPage />} />
           <Route path="/chat/:id" element={<ChatDetailPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

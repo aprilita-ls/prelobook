@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Bell, ShoppingCart, ChevronLeft, LogIn } from "lucide-react";
+import { Bell, ShoppingCart, ChevronLeft, LogIn, UserCheck, LogOut } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { currentUser } from "@/data/mockData";
@@ -27,13 +27,20 @@ const Header: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
   
   const handleLoginClick = () => {
-    // For now, we'll just show a toast indicating login functionality
-    // This would be replaced with actual authentication once integrated with a backend
+    navigate("/login");
+  };
+  
+  const handleLogoutClick = () => {
+    // Mock logout functionality
+    currentUser.loggedIn = false;
+    
     toast({
-      title: "Login Required",
-      description: "Please login or create an account to continue",
+      title: "Logout berhasil",
+      description: "Anda telah berhasil keluar dari akun",
     });
-    navigate("/login"); // This would navigate to a login page in a real app
+    
+    // Navigate to homepage after logout
+    navigate("/");
   };
   
   return (
@@ -76,13 +83,23 @@ const Header: React.FC<HeaderProps> = ({
           </button>
         )}
         
-        <button 
-          className="relative p-1.5 hover:bg-gray-100 rounded-full transition-colors"
-          onClick={handleLoginClick}
-          aria-label="Login"
-        >
-          <LogIn className="h-5 w-5 text-gray-600" />
-        </button>
+        {currentUser.loggedIn ? (
+          <button 
+            className="relative p-1.5 hover:bg-gray-100 rounded-full transition-colors"
+            onClick={handleLogoutClick}
+            aria-label="Logout"
+          >
+            <LogOut className="h-5 w-5 text-gray-600" />
+          </button>
+        ) : (
+          <button 
+            className="relative p-1.5 hover:bg-gray-100 rounded-full transition-colors"
+            onClick={handleLoginClick}
+            aria-label="Login"
+          >
+            <LogIn className="h-5 w-5 text-gray-600" />
+          </button>
+        )}
         
         {showCart && (
           <button 
@@ -93,10 +110,10 @@ const Header: React.FC<HeaderProps> = ({
                 navigate("/keranjang");
               } else {
                 toast({
-                  title: "Login Required",
-                  description: "Please login or create an account to view your cart",
+                  title: "Login Diperlukan",
+                  description: "Silakan login atau daftar untuk melihat keranjang Anda",
                 });
-                // Would navigate to login page in a real app
+                // Navigate to login page
                 navigate("/login");
               }
             }}
