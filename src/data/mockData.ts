@@ -1,3 +1,4 @@
+
 export type BookCondition = 'Baru' | 'Sangat Baik' | 'Baik' | 'Cukup Baik';
 
 export interface Book {
@@ -35,12 +36,14 @@ export interface User {
   id: string;
   name: string;
   avatar: string;
+  loggedIn: boolean;
 }
 
 export const currentUser: User = {
   id: 'user1',
   name: 'Intan',
   avatar: '/placeholder.svg',
+  loggedIn: false,
 };
 
 export const sellers: Seller[] = [
