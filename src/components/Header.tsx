@@ -1,9 +1,11 @@
 
 import React from "react";
-import { Bell, ShoppingCart, ChevronLeft } from "lucide-react";
+import { Bell, ShoppingCart, ChevronLeft, LogIn } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { currentUser } from "@/data/mockData";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 
 interface HeaderProps {
   title?: string;
@@ -23,6 +25,16 @@ const Header: React.FC<HeaderProps> = ({
   leftComponent,
 }) => {
   const navigate = useNavigate();
+  
+  const handleLoginClick = () => {
+    // For now, we'll just show a toast indicating login functionality
+    // This would be replaced with actual authentication once integrated with a backend
+    toast({
+      title: "Login Required",
+      description: "Please login or create an account to continue",
+    });
+    navigate("/login"); // This would navigate to a login page in a real app
+  };
   
   return (
     <header className="bg-white sticky top-0 z-40 px-4 py-3.5 flex items-center justify-between border-b border-gray-100 shadow-sm">
@@ -63,10 +75,31 @@ const Header: React.FC<HeaderProps> = ({
             </Badge>
           </button>
         )}
+        
+        <button 
+          className="relative p-1.5 hover:bg-gray-100 rounded-full transition-colors"
+          onClick={handleLoginClick}
+          aria-label="Login"
+        >
+          <LogIn className="h-5 w-5 text-gray-600" />
+        </button>
+        
         {showCart && (
           <button 
             className="relative p-1.5 hover:bg-gray-100 rounded-full transition-colors"
-            onClick={() => navigate("/keranjang")}
+            onClick={() => {
+              // Check if user is logged in before navigating to cart
+              if (currentUser.loggedIn) {
+                navigate("/keranjang");
+              } else {
+                toast({
+                  title: "Login Required",
+                  description: "Please login or create an account to view your cart",
+                });
+                // Would navigate to login page in a real app
+                navigate("/login");
+              }
+            }}
             aria-label="Keranjang"
           >
             <ShoppingCart className="h-5 w-5 text-gray-600" />

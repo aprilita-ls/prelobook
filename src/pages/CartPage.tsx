@@ -1,7 +1,7 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { books } from "@/data/mockData";
+import { books, currentUser } from "@/data/mockData";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, Trash2 } from "lucide-react";
@@ -15,6 +15,20 @@ interface CartItem {
 
 const CartPage: React.FC = () => {
   const navigate = useNavigate();
+  
+  // Check if user is logged in, redirect to login if not
+  useEffect(() => {
+    if (!currentUser.loggedIn) {
+      toast({
+        title: "Login Required",
+        description: "Please login or create an account to view your cart",
+        variant: "destructive",
+      });
+      // Would navigate to a login page in a real app
+      navigate("/");
+    }
+  }, [navigate]);
+  
   // This would normally be managed by a global state manager like Redux or Context
   const [cartItems, setCartItems] = useState<CartItem[]>([
     { bookId: "book1", quantity: 1 },
@@ -89,8 +103,40 @@ const CartPage: React.FC = () => {
       return;
     }
     
+    // Additional check for login status
+    if (!currentUser.loggedIn) {
+      toast({
+        title: "Login Required",
+        description: "Please login or create an account to checkout",
+        variant: "destructive",
+      });
+      // Would navigate to login page in a real app
+      navigate("/");
+      return;
+    }
+    
     navigate("/checkout");
   };
+  
+  // If not logged in, don't render the cart content
+  if (!currentUser.loggedIn) {
+    return (
+      <div className="min-h-screen bg-prelobook-background pb-24">
+        <Header title="Keranjang" showCart={false} />
+        <div className="p-4">
+          <div className="text-center py-10">
+            <h2 className="text-lg font-semibold text-prelobook-primary mb-2">
+              Login Required
+            </h2>
+            <p className="text-sm text-gray-500 mb-6">
+              Please login or create an account to view your cart
+            </p>
+          </div>
+        </div>
+        <BottomNavigation />
+      </div>
+    );
+  }
   
   return (
     <div className="min-h-screen bg-prelobook-background pb-32">
