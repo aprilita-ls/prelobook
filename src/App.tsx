@@ -24,6 +24,11 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import StartSellingPage from "./pages/StartSellingPage";
 import NotFound from "./pages/NotFound";
+import PersonalDataPage from "./pages/ProfilePages/PersonalDataPage";
+import AddressPage from "./pages/ProfilePages/AddressPage";
+import PurchaseHistoryPage from "./pages/ProfilePages/PurchaseHistoryPage";
+import FavoritesPage from "./pages/ProfilePages/FavoritesPage";
+import AccountSettingsPage from "./pages/ProfilePages/AccountSettingsPage";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +56,14 @@ const App = () => (
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/start-selling" element={<StartSellingPage />} />
+          
+          {/* Profile Sub-Pages */}
+          <Route path="/profile/data" element={<PersonalDataPage />} />
+          <Route path="/profile/address" element={<AddressPage />} />
+          <Route path="/profile/orders" element={<PurchaseHistoryPage />} />
+          <Route path="/profile/favorites" element={<FavoritesPage />} />
+          <Route path="/profile/settings" element={<AccountSettingsPage />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

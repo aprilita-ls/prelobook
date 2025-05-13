@@ -84,10 +84,14 @@ const ProfilePage: React.FC = () => {
             <Button
               variant="outline"
               className="border-prelobook-accent text-prelobook-accent"
+              onClick={() => navigate("/profile/data")}
             >
               Edit Profil
             </Button>
-            <Button className="bg-prelobook-accent hover:bg-prelobook-accent/90">
+            <Button 
+              className="bg-prelobook-accent hover:bg-prelobook-accent/90"
+              onClick={() => navigate("/profile/orders")}
+            >
               Lihat Status Pesanan
             </Button>
           </div>
