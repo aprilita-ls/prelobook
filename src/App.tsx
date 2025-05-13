@@ -22,6 +22,7 @@ import AddBookPage from "./pages/AddBookPage";
 import ExchangeHistoryPage from "./pages/ExchangeHistoryPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import StartSellingPage from "./pages/StartSellingPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/chat/:id" element={<ChatDetailPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/start-selling" element={<StartSellingPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

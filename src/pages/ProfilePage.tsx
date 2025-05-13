@@ -10,6 +10,7 @@ import {
   Settings,
   LogOut,
   ChevronRight,
+  Store,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -35,6 +36,11 @@ const ProfilePage: React.FC = () => {
       icon: ShoppingBag,
       label: "Riwayat Pembelian",
       path: "/profile/orders",
+    },
+    {
+      icon: Store,
+      label: "Mulai Jual",
+      path: "/start-selling",
     },
     {
       icon: Heart,
