@@ -30,6 +30,16 @@ import PurchaseHistoryPage from "./pages/ProfilePages/PurchaseHistoryPage";
 import FavoritesPage from "./pages/ProfilePages/FavoritesPage";
 import AccountSettingsPage from "./pages/ProfilePages/AccountSettingsPage";
 
+// Seller Pages
+import SellerDashboardPage from "./pages/Seller/DashboardPage";
+import SellerMyBooksPage from "./pages/Seller/MyBooksPage";
+import SellerAddBookPage from "./pages/Seller/AddBookPage";
+import SellerPackagesPage from "./pages/Seller/PackagesPage";
+import SellerExchangePage from "./pages/Seller/ExchangePage";
+import SellerTransactionsPage from "./pages/Seller/TransactionsPage";
+import SellerChatPage from "./pages/Seller/ChatPage";
+import SellerProfilePage from "./pages/Seller/ProfilePage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -63,6 +73,17 @@ const App = () => (
           <Route path="/profile/orders" element={<PurchaseHistoryPage />} />
           <Route path="/profile/favorites" element={<FavoritesPage />} />
           <Route path="/profile/settings" element={<AccountSettingsPage />} />
+          
+          {/* Seller Pages */}
+          <Route path="/seller/dashboard" element={<SellerDashboardPage />} />
+          <Route path="/seller/my-books" element={<SellerMyBooksPage />} />
+          <Route path="/seller/add-book" element={<SellerAddBookPage />} />
+          <Route path="/seller/packages" element={<SellerPackagesPage />} />
+          <Route path="/seller/exchange" element={<SellerExchangePage />} />
+          <Route path="/seller/transactions" element={<SellerTransactionsPage />} />
+          <Route path="/seller/chat" element={<SellerChatPage />} />
+          <Route path="/seller/chat/:id" element={<ChatDetailPage />} />
+          <Route path="/seller/profile" element={<SellerProfilePage />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

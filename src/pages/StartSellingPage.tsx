@@ -29,7 +29,7 @@ const StartSellingPage: React.FC = () => {
     
     // In a real app, you would send a request to the backend to register the user as a seller
     setTimeout(() => {
-      navigate("/add-book");
+      navigate("/seller/dashboard");
     }, 1500);
   };
 
