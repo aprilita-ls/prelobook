@@ -1,4 +1,3 @@
-
 export type BookCondition = 'Baru' | 'Sangat Baik' | 'Baik' | 'Cukup Baik';
 
 export interface Book {
@@ -37,6 +36,9 @@ export interface User {
   name: string;
   avatar: string;
   loggedIn: boolean;
+  email?: string;
+  phone?: string;
+  birthDate?: string;
 }
 
 export const currentUser: User = {

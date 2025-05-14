@@ -1,13 +1,11 @@
-
 import React from "react";
 import Header from "@/components/Header";
-import BottomNavigation from "@/components/BottomNavigation";
+import BottomNavigationSeller from "@/components/BottomNavigationSeller";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { currentUser } from "@/data/mockData";
 import { LayoutDashboard, Book, ShoppingBag, MessageSquare, Bell } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 
 const DashboardPage: React.FC = () => {
   // Mock seller data

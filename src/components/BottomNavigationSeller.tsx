@@ -5,10 +5,8 @@ import { cn } from "@/lib/utils";
 import { 
   LayoutDashboard, 
   Book, 
-  Package, 
   Repeat, 
-  Truck, 
-  MessageSquare, 
+  ShoppingBag, 
   User 
 } from "lucide-react";
 
@@ -37,7 +35,7 @@ const BottomNavigationSeller: React.FC = () => {
       path: "/seller/exchange",
     },
     {
-      icon: Truck,
+      icon: ShoppingBag,
       label: "Transaksi",
       path: "/seller/transactions",
     },
