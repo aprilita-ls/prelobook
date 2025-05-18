@@ -34,6 +34,7 @@ import AccountSettingsPage from "./pages/ProfilePages/AccountSettingsPage";
 import SellerDashboardPage from "./pages/Seller/DashboardPage";
 import SellerMyBooksPage from "./pages/Seller/MyBooksPage";
 import SellerAddBookPage from "./pages/Seller/AddBookPage";
+import SellerEditBookPage from "./pages/Seller/EditBookPage";
 import SellerPackagesPage from "./pages/Seller/PackagesPage";
 import SellerExchangePage from "./pages/Seller/ExchangePage";
 import SellerTransactionsPage from "./pages/Seller/TransactionsPage";
@@ -78,6 +79,7 @@ const App = () => (
           <Route path="/seller/dashboard" element={<SellerDashboardPage />} />
           <Route path="/seller/my-books" element={<SellerMyBooksPage />} />
           <Route path="/seller/add-book" element={<SellerAddBookPage />} />
+          <Route path="/seller/edit-book/:id" element={<SellerEditBookPage />} />
           <Route path="/seller/packages" element={<SellerPackagesPage />} />
           <Route path="/seller/exchange" element={<SellerExchangePage />} />
           <Route path="/seller/transactions" element={<SellerTransactionsPage />} />
