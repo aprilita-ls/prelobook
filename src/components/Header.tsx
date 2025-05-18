@@ -1,10 +1,9 @@
 
 import React from "react";
-import { Bell, ShoppingCart, ChevronLeft, LogIn, UserCheck, LogOut } from "lucide-react";
+import { Bell, ShoppingCart, ChevronLeft, LogIn, LogOut } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { currentUser } from "@/data/mockData";
-import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 
 interface HeaderProps {
@@ -60,13 +59,7 @@ const Header: React.FC<HeaderProps> = ({
         {title ? (
           <h1 className="text-lg font-bold text-prelobook-primary">{title}</h1>
         ) : (
-          <div className="flex items-center">
-            <img 
-              src="/placeholder.svg" 
-              alt="Logo" 
-              className="h-8 w-8"
-            />
-          </div>
+          <h1 className="text-lg font-bold text-prelobook-primary">PRELOBOOK</h1>
         )}
       </div>
 
